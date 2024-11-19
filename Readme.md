@@ -19,3 +19,5 @@
 # initialize express in app.js and listen in index.js
 
 ## install cookie-parser cors(cross origin resource sharing)
+
+# utils code (add ApiError, ApiResponse code for standardisation) and also create asyncHandler higher order fun to handle all async function, it basically gives wrapper of error handling over existing asyn fun.
