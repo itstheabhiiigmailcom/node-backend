@@ -32,3 +32,11 @@
 # add middleware in user model to encrypt password
 
 # adding or injecting some methods in userSchema model like to generateAccessToken to generateRefreshToken and a method isPassowrdCorrect to check whether password entered by user is correct or not
+
+# cloudinary , multer-fileupload
+# npm install cloudinary 
+# npm install multer
+# use fs module of node js to upload file to local server then upload it to the cloudinary
+# write cloudinary functionalities in utils, cloudinary.js
+# now write multer.middleware.js in middleware folder using multer
+
