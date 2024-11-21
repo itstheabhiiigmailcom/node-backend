@@ -18,7 +18,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   const { fullName, email, username, password } = req.body;
   console.log("email: ", email, "\n", "pass : ", password);
-  res.send(200);
+
   if (
     [fullName, email, username, password].some(
       (field) => field?.trim() === "" // it will return true or false if empty
@@ -26,6 +26,7 @@ const registerUser = asyncHandler(async (req, res) => {
   ) {
     throw new ApiError(400, "All fields are required");
   }
+
   // check if exists
   const existedUser = User.findOne({
     $or: [{ username }, { email }],
@@ -46,7 +47,7 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Avatar is required")
   }
 
-//   now store
+//   now store user object
 const user = await User.create({
     fullName,
     avatar: avatar.url,
@@ -55,6 +56,7 @@ const user = await User.create({
     password,
     username: username.toLowerCase()  
 })
+
 
 const createdUser = await User.findById(user._id).select(
     "-password -refreshToken"           // after storing pass, refreshToken nhi aana chahiye respose me
