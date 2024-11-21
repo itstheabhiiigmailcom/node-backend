@@ -20,8 +20,6 @@ connectDB()
 
 
 
-
-
 /*      approach to do evrything in index.js
 import express from 'express'
 const app = express()
