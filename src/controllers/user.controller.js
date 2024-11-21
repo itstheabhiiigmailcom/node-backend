@@ -17,7 +17,7 @@ const registerUser = asyncHandler(async (req, res) => {
   // if successful then return result otherwie failed
 
   const { fullName, email, username, password } = req.body;
-  console.log("email: ", email, "\n", "pass : ", password);
+  // console.log("email: ", email, "\n", "pass : ", password);
 
   if (
     [fullName, email, username, password].some(
@@ -28,20 +28,26 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   // check if exists
-  const existedUser = User.findOne({
+  const existedUser = await User.findOne({
     $or: [{ username }, { email }],
   });
   if (existedUser) {
     throw new ApiError(409, "User with email or username already exists");
   }
-
+  // console.log("request.files : ",req.files)
   const avatarLocalPath = req.files?.avatar[0]?.path;
-  const coverImageLocalPath = req.files?.coverImage[0]?.path;
+  // const coverImageLocalPath = req.files?.coverImage[0]?.path;          // if user will not upload it will return undefined
+
+  let coverImageLocalPath;
+  if (req.files && Array.isArray(req.files.coverImage)&& req.files.coverImage.length>0){
+      coverImageLocalPath = req.files.coverImage[0].path
+  }
+
   if (!avatarLocalPath){
     throw new ApiError(400, "Avatar file is required")
   }
   const avatar = await uploadOnCloudinary(avatarLocalPath)
-  const coverImage = await uploadOnCloudinary(coverImageLocalPath)
+  const coverImage = await uploadOnCloudinary(coverImageLocalPath)        // if cover image is absent it will atomatically return "" string
 
   if(!avatar){
     throw new ApiError(400, "Avatar is required")
@@ -57,7 +63,7 @@ const user = await User.create({
     username: username.toLowerCase()  
 })
 
-
+// console.log("User object : ", user)
 const createdUser = await User.findById(user._id).select(
     "-password -refreshToken"           // after storing pass, refreshToken nhi aana chahiye respose me
 )     // if user object ka id mil gya means user create ho gya
