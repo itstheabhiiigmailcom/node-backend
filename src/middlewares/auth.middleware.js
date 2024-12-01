@@ -1,11 +1,11 @@
-import {asyncHandler} from '../utils/asyncHandler'
-import { ApiError } from '../utils/ApiError'
+import {asyncHandler} from '../utils/asyncHandler.js'
+import { ApiError } from '../utils/ApiError.js'
 import jwt from 'jsonwebtoken'
-import { User } from '../models/user.model'
+import { User } from '../models/user.model.js'
 
 // here, req has cookies because we are using cookie middleware
 // agar accessToken cookies me hai ya fir user koi (Authorization)header bheja hai vo hoga
-export const vefiryJWT = asyncHandler( async (req, _, next) => {
+export const verifyJWT = asyncHandler( async (req, _, next) => {
     try {
         const token = req.cookies?.accessToken  || req.header("Authorization")?.replace("Bearer ","")
     
