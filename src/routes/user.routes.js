@@ -1,5 +1,4 @@
 import {Router} from 'express'
-  updateUserCoverImage,
   import {loginUser,
      logoutUser,
      registerUser,
